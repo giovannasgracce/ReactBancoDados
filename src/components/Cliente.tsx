@@ -1,4 +1,6 @@
-import { PressableProps,Pressable,StyleSheet,Text} from 'react-native'
+import { PressableProps,Pressable,StyleSheet,Text, TouchableOpacity,View} from 'react-native'
+import {MaterialIcons} from "@expo/vector-icons"
+
 
 type Props = PressableProps & {
     data:{
@@ -7,25 +9,46 @@ type Props = PressableProps & {
         telefone:string
         endereco:string
     }
-}
+    onDelete: ()=> void
+    onEditar: ()=> void
 
-export function Cliente({data, ...rest}: Props){
+}//instacia de variavel
+
+
+export function Cliente({data,  onDelete, onEditar ,...rest}: Props){
     return(
-        <Pressable style={styles.fundo} {...rest}>
-            <Text style={styles.texto} >
-                {data.id} - {data.nome} - {data.telefone} - {data.endereco}
-            </Text>
-        </Pressable>
+        <View style={styles.container}>
+            <Pressable style={styles.fundo} {...rest}>
+                <Text style={styles.texto} >
+                    {data.id} - {data.nome} - {data.telefone} - {data.endereco}
+                </Text>
+
+                <TouchableOpacity onPress={onEditar}>
+                    <MaterialIcons name="edit" size ={24} color="#3232aa"/>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={onDelete}>
+                    <MaterialIcons name="delete" size ={24} color="red"/>
+                </TouchableOpacity>
+             </Pressable>  
+        </View>
     );
 }
 
 const styles = StyleSheet.create({  
+    container:{
+        justifyContent:"center",
+        marginLeft:20,
+        marginRight:50,
+    },
     fundo:{
+        width:"80%",
         backgroundColor:"#cecece",
-        padding:30,
+        padding:24,
         borderRadius:5,
-        gap:5,
+        gap:12,
         marginTop:10,
+        flexDirection: "row",
     },
     texto:{
         flex:1,
